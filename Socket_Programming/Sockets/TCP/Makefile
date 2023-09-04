@@ -1,11 +1,11 @@
 
-all : tcpserver tcpclient
+all : tcpserver.o tcpclient.o
 	echo "Server and client ready."
 	
-tcpserver : tcpserver.c
+tcpserver.o : tcpserver.c
 	gcc tcpserver.c -o tcpserver
 	
-tcpclient : tcpclient.c
+tcpclient.o : tcpclient.c
 	gcc  tcpclient.c -o tcpclient
 	
 clean:

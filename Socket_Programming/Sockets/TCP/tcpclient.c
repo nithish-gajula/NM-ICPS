@@ -10,7 +10,7 @@
 
 int main()
 {
-	char *ip = "192.168.0.199";
+	char *ip = "127.0.0.1";
 	int port = 9666;
 
 	int sockfd,ret;
@@ -46,10 +46,12 @@ int main()
 		printf("Client - ");
 		scanf(" %[^\n]s",buffer);
 		send(sockfd,buffer,strlen(buffer),0);
+		printf("Client sending %ld bytes of data\n",strlen(buffer));
 
 		bzero(buffer,sizeof(buffer));
 		recv(sockfd,buffer,sizeof(buffer),0);
 		printf("Server - %s\n",buffer);
+		printf("Client received %ld bytes of data\n",strlen(buffer));
 	}
 	close(sockfd);
 	printf("Disconnected from the server.\n");

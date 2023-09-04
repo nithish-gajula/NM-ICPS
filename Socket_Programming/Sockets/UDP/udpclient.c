@@ -9,7 +9,7 @@
 int main()
 {
 
-  char *ip = "192.168.0.199";
+  char *ip = "127.0.0.1";
   int port = 9666;
 
   int sockfd;
@@ -37,10 +37,12 @@ int main()
   	printf("Client - ");
 	scanf(" %[^\n]s",buffer);
   	sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr*)&addr,addrlen);
+  	printf("Client sending %d bytes of data\n",strlen(buffer));
 
   	bzero(buffer, sizeof(buffer));
   	recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)&addr, &addrlen);
 	printf("Server - %s\n",buffer);
+	printf("Client received %d bytes of data\n",strlen(buffer));
   }
 
   return 0;

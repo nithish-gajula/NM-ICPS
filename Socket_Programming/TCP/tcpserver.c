@@ -13,9 +13,9 @@ int main()
 	char *ip = "127.0.0.1";
 	int port = 5566;
 
-	int server_sockfd,client_sockfd,ret;
-	struct sockaddr_in server_address,client_address;
-	socklen_t server_addrlen,client_addrlen;
+	int server_sockfd, client_sockfd, ret;
+	struct sockaddr_in server_address, client_address;
+	socklen_t server_addrlen, client_addrlen;
 	char buffer[1024];
 
 	server_sockfd = socket(AF_INET,SOCK_STREAM,0);

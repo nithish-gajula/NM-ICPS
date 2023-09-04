@@ -1,10 +1,10 @@
-all : udpserver udpclient
+all : udpserver.o udpclient.o
 	echo "Server and client ready."
 	
-udpserver : udpserver.c
+udpserver.o : udpserver.c
 	gcc udpserver.c -o udpserver
 	
-udpclient : udpclient.c
+udpclient.o : udpclient.c
 	gcc  udpclient.c -o udpclient
 
 clean:

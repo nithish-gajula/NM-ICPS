@@ -64,11 +64,13 @@ int main()
 		bzero(buffer,sizeof(buffer));
 		recv(client_sockfd,buffer,sizeof(buffer),0);
 		printf("Client - %s\n",buffer);
+		printf("Server received %ld bytes of data\n",strlen(buffer));
 
 		bzero(buffer,sizeof(buffer));
 		printf("Server - ");
 		scanf(" %[^\n]s",buffer);
 		send(client_sockfd,buffer,strlen(buffer),0);
+		printf("Server sending %ld bytes of data\n",strlen(buffer));
 
 	}
 	close(client_sockfd);

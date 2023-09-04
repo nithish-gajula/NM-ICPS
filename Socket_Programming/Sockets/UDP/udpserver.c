@@ -45,11 +45,13 @@ int main()
 		bzero(buffer,sizeof(buffer));
 		recvfrom(sockfd,buffer,sizeof(buffer),0,(struct sockaddr*)&client_address,&client_addrlen);
 		printf("Client - %s\n",buffer);
+		printf("Server received %d bytes of data\n",strlen(buffer));
 
 		bzero(buffer,sizeof(buffer));
 		printf("Sever - ");
 		scanf(" %[^\n]s",buffer);
 		sendto(sockfd,buffer,strlen(buffer),0,(struct sockaddr*)&client_address,client_addrlen);
+		printf("Server sending %d bytes of data\n",strlen(buffer));
 	}
 	return 0;
 }
