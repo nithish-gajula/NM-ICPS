@@ -1,0 +1,36 @@
+In c programming, arrays are linear data structures with static memory allocation, that means the size of array can not be changed at runtime.
+An array is a collection of similar data types which are stored in memory as a contiguous memory block.
+The size of the array is based on the datatype of that array
+
+Example 1 :
+
+    int a[5];
+    a[0] = 1;
+    a[1] = 2;
+    a[2] = 3;
+    a[3] = 4;
+    a[4] = 5;
+
+Example 2 :
+
+    int a[5] = {1,2,3,4,5};
+    int b[9] = {1,2,3};
+
+    for(int i=0; i<5; i++){
+        printf("%d\n",a[i]);
+    }
+
+Example 3 :
+
+    /adfhafk
+
+In the Example 2, the array b is of size 9, but it is filled with only 3 elements, so other remaining elements are initially filled with 0
+
+If you want to print the size of array :
+
+    int a[5]={1,2,3,4,5};
+    int b[] = {1,2,3,4,5,6,7,8}
+    int size = sizeof(arr)/sizeof(arr[0]);  // result will be 100
+    int size = sizeof(arr)/sizeof(arr[0]);  // result will be 8
+
+If you want the no.of elements present in an array :
