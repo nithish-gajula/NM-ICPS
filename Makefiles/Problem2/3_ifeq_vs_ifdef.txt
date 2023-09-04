@@ -1,0 +1,24 @@
+In a makefile, the ifeq and ifdef directives are used to conditionally evaluate parts of the makefile based on certain conditions. Here's an explanation of the differences between "ifeq" and "ifdef"
+
+
+1) ifeq:
+The ifeq directive is used to compare two values for equality. It allows you to conditionally execute certain parts of the makefile based on the result of the comparison. 
+
+example syntax:
+ifeq (condition, value)
+    # Statements to execute if the condition is true
+else
+    # Statements to execute if the condition is false
+endif
+
+
+
+2. ifdef:
+The ifdef directive is used to check if a variable is defined or not. It allows you to conditionally evaluate parts of the makefile based on whether a variable has been defined.
+
+example syntax:
+ifdef variable
+    # Statements to execute if the variable is defined
+else
+    # Statements to execute if the variable is not defined
+endif

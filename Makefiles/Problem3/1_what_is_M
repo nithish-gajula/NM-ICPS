@@ -1,0 +1,9 @@
+1) Using -M in command like "gcc -M main.c", it will print all user defined headerfiles and required predefined header files for the main.c
+
+it will print all the dependency header files for the Makefile
+
+By using the -M option, you can easily generate the necessary dependency information for your source files and integrate it into your makefile, ensuring that the correct files are rebuilt when changes occur in the source code or its dependencies.
+
+
+
+2) The -M option in GCC helps in writing makefiles for bigger workspaces by automating the generation of dependency information. It simplifies maintenance, improves build efficiency, enhances scalability, and promotes modularity and flexibility in the build system.
