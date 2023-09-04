@@ -1,0 +1,47 @@
+What is Entity ?
+
+An "entity" refers to a logical functional unit responsible for specific tasks within a specific layer. 
+
+Example : Entities in the PDCP layer represent different functionalities that contribute to the overall operation of the layer.
+These entities are software-based and interact with entities in adjacent layers as well as within the same PDCP layer.
+The exact number and types of entities within the PDCP layer might vary based on the specific implementation and the features supported by the network.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+How many entities are present in a specific layer in 5G-NR protocol stack ?
+
+There isn't a fixed or standardized number of entities for each layer, as it depends on factors such as the complexity of the protocol, 
+the functionalities required by the layer, and the specific features supported by the network.
+In general, each layer is responsible for specific tasks, and these tasks might be divided among multiple logical entities. Some layers might have a few core entities that handle essential functions, while other layers could have additional specialized entities for specific purposes.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+What is 3GPP specifications ?
+
+
+The 3rd Generation Partnership Project (3GPP) is a collaborative initiative that develops global standards for mobile communications technologies. It is responsible for creating and maintaining the standards for various generations of mobile networks, including 3G (UMTS), 4G (LTE), and 5G (New Radio or NR).
+
+3GPP brings together telecommunications standards organizations from around the world to work on the development and maintenance of these standards. The goal of 3GPP is to ensure interoperability, compatibility, and seamless communication between different network components and devices across different vendors and regions.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+what is ROHC ?
+
+ROHC is a header compression protocol/algorithm that can be used compress the header of different IP packets. In normal case without compression  IPv4 header is 40 bytes and IPv6 header is 60 bytes but with the help of ROHC compression these header can be compressed to 1 or 3 bytes.
+
+
+
+IP header compression also provides other important benefits, such as reduction in packet loss and improved interactive response time.
+
+As there lots of information in header remains static during the whole session, only small part is changing which is only 1 or 3 byte. Transmitting only changing part is the compressing the header.
+
+![IPv4 Header Information & UDP Datagram Header Information](image-1.png)
+
+For example, Source IP, Destination IP, Version, Header Length, Type of Service, Source Port, Destination Port will remain static for a transaction. Simply by not transmitting this information for further transaction, the header size reduce significantly.
+Other part like checksum and data can also be compressed with the ROHC algorithm.
+
+ROHC Profiles
+
+ROHC is managed under RFC 3095 and with reference to it, there are four different types of ROHC profiles.
+
+Profile 0 (ROHC Uncompressed) : Compresses packets, which cannot be compressed by any of the below profiles
+Profile 1 (ROHC RTP) : Compresses packets with IP/UDP/RTP protocol headers
+Profile 2 (ROHC UDP) : Compresses packets with IP/UDP protocol headers
+Profile 3 (ROHC ESP) : Compresses packets with IP/ESP protocol headers
+Where as per 3GPP specification 36.323 there are following profiles are defined.
+
+![RoHC Profiles](<RoHC Profiles.png>)
