@@ -1,0 +1,4 @@
+
+sudo apt-get remove <app-name>
+
+uname -m    : to find the system architecture

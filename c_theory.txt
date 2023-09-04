@@ -1,0 +1,137 @@
+The `stdio.h` header file in C contains various function declarations and definitions related to standard input/output operations. It provides functions for reading input from the user, writing output to the console or files, and performing file operations. Here are some commonly used functions provided by `stdio.h`:
+
+1. Input/output functions:
+   - `printf()`: Print formatted output to the console.
+   - `scanf()`: Read formatted input from the user.
+   - `puts()`: Write a string to the console followed by a newline character.
+   - `gets()`: Read a line of input from the console (avoid using this function due to security risks).
+   - `getchar()`: Read a single character from the console.
+   - `putchar()`: Write a single character to the console.
+
+2. File I/O functions:
+   - `fopen()`: Open a file.
+   - `fclose()`: Close a file.
+   - `fprintf()`: Write formatted output to a file.
+   - `fscanf()`: Read formatted input from a file.
+   - `fgets()`: Read a line of input from a file.
+   - `fputc()`: Write a single character to a file.
+   - `fgetc()`: Read a single character from a file.
+   - `feof()`: Check if the end-of-file indicator has been set for a file.
+   - `rewind()`: Move the file position indicator to the beginning of a file.
+
+3. Error handling functions:
+   - `perror()`: Print an error message to the console based on the value of `errno`.
+   - `errno`: A global variable that holds the error code of the last encountered error.
+
+4. File positioning functions:
+   - `ftell()`: Get the current position of the file pointer in a file.
+   - `fseek()`: Move the file pointer to a specific position in a file.
+
+5. Standard streams:
+   - `stdin`: The standard input stream.
+   - `stdout`: The standard output stream.
+   - `stderr`: The standard error stream.
+
+-----------------------------------------------------------------------------------------------
+
+The `stdlib.h` header file in C contains various function declarations and definitions related to general utilities and memory management. Here are some commonly used functions provided by `stdlib.h`:
+
+1. Memory management functions:
+   - `malloc()`: Allocate memory dynamically.
+   - `calloc()`: Allocate and initialize memory to zero.
+   - `realloc()`: Reallocate memory dynamically.
+   - `free()`: Free dynamically allocated memory.
+
+2. String conversion functions:
+   - `atoi()`, `atol()`, `atoll()`: Convert a string to an integer, long, or long long, respectively.
+   - `atof()`: Convert a string to a floating-point number.
+   - `itoa()`: Convert an integer to a string.
+
+3. Pseudo-random number generation functions:
+   - `rand()`: Generate a random integer.
+   - `srand()`: Seed the random number generator.
+
+4. Process and environment functions:
+   - `exit()`: Terminate the program.
+   - `system()`: Execute a command by invoking the shell.
+   - `getenv()`: Get the value of an environment variable.
+
+5. Sorting and searching functions:
+   - `qsort()`: Sort an array.
+   - `bsearch()`: Binary search in a sorted array.
+
+6. Other utility functions:
+   - `abs()`, `labs()`, `llabs()`: Compute the absolute value of an integer, long, or long long, respectively.
+   - `rand()`: Generate a pseudo-random number.
+   - `rand_r()`: Generate a pseudo-random number in a thread-safe manner.
+   - `exit()`: Terminate the program.
+   - `system()`: Execute a shell command.
+
+--------------------------------------------------------------------------------------------
+
+The `unistd.h` header file in C contains various function declarations and definitions related to system calls, process management, and miscellaneous functions. It provides functions that allow interaction with the operating system, perform system-level operations, and access environment information. Here are some commonly used functions provided by `unistd.h`:
+
+1. System call functions:
+   - `fork()`: Create a new process by duplicating the existing process.
+   - `exec()`: Replace the current process with a new process.
+   - `exit()`: Terminate the calling process.
+   - `pipe()`: Create a pipe for interprocess communication.
+   - `dup()`, `dup2()`: Duplicate a file descriptor.
+   - `close()`: Close a file descriptor.
+   - `read()`, `write()`: Read from or write to a file descriptor.
+
+2. Process management functions:
+   - `getpid()`: Get the process ID of the calling process.
+   - `getppid()`: Get the parent process ID of the calling process.
+   - `getuid()`, `getgid()`: Get the user ID and group ID of the calling process.
+   - `geteuid()`, `getegid()`: Get the effective user ID and group ID of the calling process.
+   - `getcwd()`: Get the current working directory.
+   - `chdir()`: Change the current working directory.
+   - `execvp()`: Replace the current process with a new process using a file search path.
+
+3. Miscellaneous functions:
+   - `sleep()`: Suspend the execution of the calling process for a specified number of seconds.
+   - `usleep()`: Suspend the execution of the calling process for a specified number of microseconds.
+   - `access()`: Check whether a file can be accessed.
+   - `gethostname()`: Get the name of the current host.
+   - `getopt()`: Parse command-line arguments.
+   - `link()`, `unlink()`: Create or remove a hard link to a file.
+
+4. Symbolic constants:
+   - `STDIN_FILENO`, `STDOUT_FILENO`, `STDERR_FILENO`: File descriptors for standard input, output, and error.
+
+-----------------------------------------------------------------------------------------------
+The `pthread.h` header file in C contains declarations and definitions related to multi-threading and thread management. It provides functions, types, and constants for creating, controlling, and synchronizing threads. Here are some commonly used components provided by `pthread.h`:
+
+1. Thread creation and management functions:
+   - `pthread_create()`: Create a new thread.
+   - `pthread_exit()`: Terminate the calling thread.
+   - `pthread_join()`: Wait for a thread to terminate.
+   - `pthread_detach()`: Detach a thread to allow it to run independently.
+   - `pthread_self()`: Get the ID of the calling thread.
+   - `pthread_equal()`: Compare two thread IDs for equality.
+
+2. Mutex functions and types:
+   - `pthread_mutex_init()`, `pthread_mutex_destroy()`: Initialize and destroy a mutex.
+   - `pthread_mutex_lock()`, `pthread_mutex_trylock()`, `pthread_mutex_unlock()`: Lock and unlock a mutex.
+   - `pthread_mutex_t`: Data type representing a mutex.
+
+3. Condition variable functions and types:
+   - `pthread_cond_init()`, `pthread_cond_destroy()`: Initialize and destroy a condition variable.
+   - `pthread_cond_wait()`, `pthread_cond_timedwait()`: Wait on a condition variable.
+   - `pthread_cond_signal()`, `pthread_cond_broadcast()`: Signal or broadcast a condition variable.
+   - `pthread_cond_t`: Data type representing a condition variable.
+
+4. Synchronization functions and types:
+   - `pthread_barrier_init()`, `pthread_barrier_destroy()`: Initialize and destroy a barrier.
+   - `pthread_barrier_wait()`: Block until all threads reach the barrier.
+   - `pthread_barrier_t`: Data type representing a barrier.
+   - `pthread_rwlock_init()`, `pthread_rwlock_destroy()`: Initialize and destroy a read-write lock.
+   - `pthread_rwlock_rdlock()`, `pthread_rwlock_wrlock()`, `pthread_rwlock_unlock()`: Acquire and release a read-write lock.
+   - `pthread_rwlock_t`: Data type representing a read-write lock.
+
+5. Thread-specific data functions and types:
+   - `pthread_key_create()`, `pthread_key_delete()`: Create and delete a thread-specific data key.
+   - `pthread_setspecific()`, `pthread_getspecific()`: Set and get the value associated with a thread-specific data key.
+   - `pthread_once()`: Perform one-time initialization.
+

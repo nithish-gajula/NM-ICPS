@@ -1,0 +1,112 @@
+The operating system needs a specific location to start executing the program. The main() function provides that starting point. When you run a C program, the execution begins with the first statement inside the main() function.
+The main() function can have a return type of int to indicate the status of the program's execution to the operating system. A return value of 0 usually indicates successful execution, while a non-zero value can be used to signify an error or a specific condition.
+The main() function is a crucial component of C programming because it serves as the entry point for program execution, defines the flow of the program, contains the user-defined code, and can provide an indication of the program's execution status.
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Comments :
+    we use // (two forward slashes) to start a single line comment. The main purpose of using comments is to help other people reading the code understand it.
+    we use /* ... */ for multiline comment 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Semicolon :
+The ; at the end is mandatory in C programming. It indicates the end of the statement.
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+Literals :
+1. Integer Literals - Numbers without decimal parts. For example, 25, -54, 923, etc.
+decimal (base 10) - 0, -9, 22 etc
+octal (base 8) - 021, 077, 033 etc
+hexadecimal (base 16) - 0x7f, 0x2a, 0x521 etc
+
+2. Floating-point Literals - Numbers that have a decimal part. For example, 32.9, -56.5, 9.0, etc.
+-2.0
+0.0000234
+-0.22E-5 => E-5 = 10 power -5
+
+3. Character Literals - A single character that is enclosed within single quotation marks. For example, 's', '}', 'N', '*', etc.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Variables :
+
+int a;      // Declaring a variable 
+int b=10;   // Defining or initializing a variable
+
+In c, we use format specifiers to print variables, for every data type there are different format specifiers
+printf("%d",a);     // Here %d is a format specifier
+
+%d      for integers
+%f      for floating points (float is for small decimal point numbers)
+%c      for character 
+%s      for string literals 
+%lf     for double (double is for long decimal point numbers)
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Data types size
+int     - 4 bytes (32 bits)
+float   - 4 bytes (32 bits)
+char    - 1 byte  (8 bits)
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Format Specifiers:
+=>Integer Types:
+%d: Print or scan an integer value.
+%u: Print or scan an unsigned integer value.
+%ld: Print or scan a long integer value.
+%lu: Print or scan an unsigned long integer value.
+=>Floating-Point Types:
+%f: Print or scan a floating-point (float) value.
+%lf: Print or scan a double-precision floating-point (double) value.
+=>Character Type:
+%c: Print or scan a character.
+=>String Type:
+%s: Print or scan a null-terminated string.
+=>Pointer Type:
+%p: Print the memory address pointed to by a pointer.
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+C Keywords:
+
+    Keywords are predefined, reserved words used in programming that have special meanings to the compiler. Keywords are part of the syntax and they cannot be used as an identifier.
+
+auto	double	int	struct
+break	else	long	switch
+case	enum	register	typedef
+char	extern	return	union
+continue	for	signed	void
+do	if	static	while
+default	goto	sizeof	volatile
+const	float	short	unsigned
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+Constants:
+
+If you want to define a variable whose value cannot be changed, you can use the const keyword.
+
+const double PI = 3.14;
+PI = 2.9; //Error
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+void :
+void is an incomplete type. It means "nothing" or "no type". You can think of void as absent.
+
+For example, if a function is not returning anything, its return type should be void.
+
+Note that, you cannot create variables of void type.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Header files
+
+stdio.h (Standard Input/ Output header) - contains functions like printf and scanf
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+Scanf():
+
+scanf() is one of the commonly used function to take input from the user.
+scanf("%d", &testInteger);  
+scanf("%f", &num1);
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+C Bitwise Operators :
+
+&	Bitwise AND
+|	Bitwise OR
+^	Bitwise exclusive OR
+~	Bitwise complement
+<<	Shift left
+>>	Shift right
+
+
+
+
