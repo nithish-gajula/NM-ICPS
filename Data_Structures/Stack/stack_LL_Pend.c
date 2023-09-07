@@ -33,7 +33,7 @@ int main(){
 				return 0;
 				break;
 			default:
-				printf("Worng choice\n");
+				printf("Wrong choice\n");
 				break;
 		}
 	}
