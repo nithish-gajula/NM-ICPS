@@ -100,7 +100,7 @@ int main() {
     // Server address setup
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(12345); // Port number on the server
-    server_addr.sin_addr.s_addr = inet_addr("127.0.0.1"); // Replace with the server's IP address
+    server_addr.sin_addr.s_addr = inet_addr("10.0.2.15"); // Replace with the server's IP address
 
     // Connect to the server
     if (connect(client_socket, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1) {
