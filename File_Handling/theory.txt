@@ -1,0 +1,8 @@
+FILE - data type
+fopen("file","mode");
+fprintf();
+fscanf();
+fwrite();
+fread();
+fseek();
+fclose();

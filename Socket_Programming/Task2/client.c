@@ -4,20 +4,16 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
+#pragma pack(1)
 
-struct USER {
-    unsigned char user1 : 4;
-    unsigned char user2 : 4;
+struct NAS {
+    unsigned char nas1:5;
+    unsigned char nas2:3;
 };
 
 struct RRC {
-    unsigned char rrc1 ;
-    unsigned char rrc2 ;
-};
-
-struct NAS {
-    unsigned char nas1: 4;
-    unsigned char nas2: 4;
+    unsigned char rrc1:5;
+    unsigned char rrc2:3;
 };
 
 struct SDAP {
@@ -29,18 +25,15 @@ struct SDAP {
 struct PDCP {
     unsigned char DC: 1;
     unsigned char R: 5;
-    unsigned char SN: 2;
-    unsigned char SN1;
-    unsigned char SN2;
-    unsigned char Data;
+    unsigned int SN:18;
 };
 
 struct RLC {
     unsigned char DC: 1;
     unsigned char P: 1;
     unsigned char SI: 2;
-    unsigned char SN: 4;
-    unsigned char SO;
+    unsigned short int SN:12;
+    unsigned short int SO:16;
 };
 
 struct MAC {
@@ -50,45 +43,49 @@ struct MAC {
     unsigned char L;
 };
 
-void updateUSER(struct USER *user);
-void updateRRC (struct RRC *rrc);
+struct USER {
+    unsigned char user1 : 8;
+};
+
+
 void updateNAS (struct NAS *nas);
+void updateRRC (struct RRC *rrc);
 void updateSDAP (struct SDAP *sdap);
 void updatePDCP (struct PDCP *pdcp);
 void updateRLC (struct RLC *rlc);
 void updateMAC (struct MAC *mac);
+void updateUSER(struct USER *user);
+
+
 
 
 
 int main() {
     int client_socket;
     struct sockaddr_in server_addr;
-
-    // Create three sample structs of different sizes
     
-
-    //struct USER *user = (struct USER*) malloc(sizeof(struct USER));
-    struct USER user;
-    struct RRC rrc;
+    // Create 7 structs
     struct NAS nas;
+    struct RRC rrc;
     struct SDAP sdap;
     struct PDCP pdcp;
     struct RLC rlc;
     struct MAC mac;
+    struct USER user;
 
-    updateUSER(&user);
-    updateRRC(&rrc);
+
     updateNAS(&nas);
+    updateRRC(&rrc);
     updateSDAP(&sdap);
     updatePDCP(&pdcp);
     updateRLC(&rlc);
     updateMAC(&mac);
+    updateUSER(&user);
 
-    //printf("user1 : %d\n",user->user1);
-
-    // Calculate the total size needed to send all three structs
-    size_t total_size = sizeof(user) + sizeof(rrc) + sizeof(nas) + sizeof(sdap) + sizeof(pdcp) + sizeof(rlc) + sizeof(mac);
+    // Calculate the total size needed to send all structs
+    size_t total_size = sizeof(nas) + sizeof(rrc) + sizeof(sdap) + sizeof(pdcp) + sizeof(rlc) + sizeof(mac) + sizeof(user);
     char buffer[total_size];
+    printf("Buffer size : %ld\n",total_size);
 
     // Create a socket
     client_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -99,23 +96,22 @@ int main() {
 
     // Server address setup
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(12345); // Port number on the server
-    server_addr.sin_addr.s_addr = inet_addr("10.0.2.15"); // Replace with the server's IP address
+    server_addr.sin_port = htons(4000); // Port number on the server
+    server_addr.sin_addr.s_addr = inet_addr("192.168.11.188"); // Replace with the server's IP address
 
     // Connect to the server
     if (connect(client_socket, (struct sockaddr*)&server_addr, sizeof(server_addr)) == -1) {
         perror("Connection failed");
         exit(EXIT_FAILURE);
     }
+printf("connected...\n");
 
     // Copy the structs into the buffer
     char *ptr = buffer;
-    memcpy(ptr, &user, sizeof(user));
-    ptr += sizeof(user);
-    memcpy(ptr, &rrc, sizeof(rrc));
-    ptr += sizeof(rrc);
     memcpy(ptr, &nas, sizeof(nas));
     ptr += sizeof(nas);
+    memcpy(ptr, &rrc, sizeof(rrc));
+    ptr += sizeof(rrc);
     memcpy(ptr, &sdap, sizeof(sdap));
     ptr += sizeof(sdap);
     memcpy(ptr, &pdcp, sizeof(pdcp));
@@ -123,31 +119,35 @@ int main() {
     memcpy(ptr, &rlc, sizeof(rlc));
     ptr += sizeof(rlc);
     memcpy(ptr, &mac, sizeof(mac));
-
+    ptr += sizeof(mac);
+    memcpy(ptr, &user, sizeof(user));
     
 
-    // Send the buffer containing all three structs to the server
+    // Send the buffer containing all structs to the server
     send(client_socket, buffer, total_size, 0);
     printf("Sent %ld bytes of data to the server\n",sizeof(buffer));
+    
+    for(int i=0; i< total_size; i++){
+    	printf("Loop %d : Buffer : %d\n",i,buffer[i]);
+    }
 
     close(client_socket);
+    printf("Disconnected from the server.\n");
+    
+    	
+    	
 
     return 0;
 }
 
-void updateUSER(struct USER *user){
-    user->user1 = 1;
-    user->user2 = 2;
+void updateNAS (struct NAS *nas){
+    nas->nas1 = 1;
+    nas->nas2 = 2;
 }
 
 void updateRRC (struct RRC *rrc){
     rrc->rrc1 = 3;
     rrc->rrc2 = 4;
-}
-
-void updateNAS (struct NAS *nas){
-    nas->nas1 = 5;
-    nas->nas2 = 6;
 }
 
 void updateSDAP (struct SDAP *sdap){
@@ -159,10 +159,7 @@ void updateSDAP (struct SDAP *sdap){
 void updatePDCP (struct PDCP *pdcp){
     pdcp->DC = 0;
     pdcp->R = 15;
-    pdcp->SN = 1;
-    pdcp->SN1 = 253;
-    pdcp->SN2 = 254;
-    pdcp->Data = 255;
+    pdcp->SN = 255;
 }
 
 void updateRLC (struct RLC *rlc){
@@ -179,3 +176,25 @@ void updateMAC (struct MAC *mac){
     mac->LCID = 15;
     mac->L = 255;
 }
+
+void updateUSER(struct USER *user){
+    user->user1 = 'N';
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

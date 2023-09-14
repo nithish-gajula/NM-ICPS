@@ -4,19 +4,16 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-struct USER {
-    unsigned char user1 : 4;
-    unsigned char user2 : 4;
+#pragma pack(1)
+
+struct NAS {
+    unsigned char nas1:5;
+    unsigned char nas2:3;
 };
 
 struct RRC {
-    unsigned char rrc1 ;
-    unsigned char rrc2 ;
-};
-
-struct NAS {
-    unsigned char nas1: 4;
-    unsigned char nas2: 4;
+    unsigned char rrc1:5;
+    unsigned char rrc2:3;
 };
 
 struct SDAP {
@@ -28,18 +25,15 @@ struct SDAP {
 struct PDCP {
     unsigned char DC: 1;
     unsigned char R: 5;
-    unsigned char SN: 2;
-    unsigned char SN1;
-    unsigned char SN2;
-    unsigned char Data;
+    unsigned int SN:18;
 };
 
 struct RLC {
     unsigned char DC: 1;
     unsigned char P: 1;
     unsigned char SI: 2;
-    unsigned char SN: 4;
-    unsigned char SO;
+    unsigned short int SN:12;
+    unsigned short int SO:16;
 };
 
 struct MAC {
@@ -49,21 +43,38 @@ struct MAC {
     unsigned char L;
 };
 
-struct USER user;
-struct RRC rrc;
+struct USER {
+    unsigned char user1 : 8;
+};
+
 struct NAS nas;
+struct RRC rrc;
 struct SDAP sdap;
 struct PDCP pdcp;
 struct RLC rlc;
 struct MAC mac;
+struct USER user;
+
+
+void printNAS (struct NAS *nas);
+void printRRC (struct RRC *rrc);
+void printSDAP (struct SDAP *sdap);
+void printPDCP (struct PDCP *pdcp);
+void printRLC (struct RLC *rlc);
+void printMAC (struct MAC *mac);
+void printUSER(struct USER *user);
+
+
+
 
 int main() {
     int server_socket, client_socket;
     struct sockaddr_in server_addr, client_addr;
 
-    // Calculate the total size needed to receive all three structs
-    size_t total_size = sizeof(struct USER) + sizeof(struct RRC) + sizeof(struct NAS) + sizeof(struct SDAP) + sizeof(struct PDCP) + sizeof(struct RLC) + sizeof(struct MAC);
+    // Calculate the total size needed to receive all structs
+    size_t total_size = sizeof(nas) + sizeof(rrc) + sizeof(sdap) + sizeof(pdcp) + sizeof(rlc) + sizeof(mac) + sizeof(user);
     char buffer[total_size];
+    printf("Buffer size : %ld\n",total_size);
 
     // Create a socket
     server_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -74,7 +85,7 @@ int main() {
 
     // Server address setup
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(12345); // Port number
+    server_addr.sin_port = htons(4000); // Port number
     server_addr.sin_addr.s_addr = INADDR_ANY;
 
     // Bind the socket
@@ -104,15 +115,17 @@ int main() {
     // Receive the buffer containing all three structs from the client
     recv(client_socket, buffer, total_size, 0);
     printf("Received %ld bytes of data from the client\n",sizeof(buffer));
+    
+    for(int i=0; i< total_size; i++){
+    	printf("Loop %d : Buffer : %d\n",i,buffer[i]);
+    }
 
     // Extract and print the received structs
     char *ptr = buffer;
-    memcpy(&user, ptr, sizeof(user));
-    ptr += sizeof(user);
-    memcpy(&rrc, ptr, sizeof(rrc));
-    ptr += sizeof(rrc);
     memcpy(&nas, ptr, sizeof(nas));
     ptr += sizeof(nas);
+    memcpy(&rrc, ptr, sizeof(rrc));
+    ptr += sizeof(rrc);
     memcpy(&sdap, ptr, sizeof(sdap));
     ptr += sizeof(sdap);
     memcpy(&pdcp, ptr, sizeof(pdcp));
@@ -120,57 +133,82 @@ int main() {
     memcpy(&rlc, ptr, sizeof(rlc));
     ptr += sizeof(rlc);
     memcpy(&mac, ptr, sizeof(mac));
+    ptr += sizeof(mac);
+    memcpy(&user, ptr, sizeof(user));
+    
     
 
-    printf("--------------------------------\n");
-    printf("Received UserInput\n");
-    printf("user1 : %d\n", user.user1);
-    printf("user2 : %d\n", user.user2);
-    printf("--------------------------------\n");
-    printf("--------------------------------\n");
-    printf("Received RRC Header\n");
-    printf("rrc1 : %d\n", rrc.rrc1);
-    printf("rrc2 : %d\n", rrc.rrc2);
-    printf("--------------------------------\n");
-    printf("--------------------------------\n");
-    printf("Received NAS Header\n");
-    printf("nas1 : %d\n", nas.nas1);
-    printf("nas2 : %d\n", nas.nas2);
-    printf("--------------------------------\n");
-    printf("--------------------------------\n");
-    printf("Received SDAP Header\n");
-    printf("RDI : %d\n", sdap.RDI);
-    printf("RQI : %d\n", sdap.RQI);
-    printf("QFI : %d\n", sdap.QFI);
-    printf("--------------------------------\n");
-    printf("--------------------------------\n");
-    printf("Received PDCP Header\n");
-    printf("DC : %d\n", pdcp.DC);
-    printf("R : %d\n", pdcp.R);
-    printf("SN : %d\n", pdcp.SN);
-    printf("SN1 : %d\n", pdcp.SN1);
-    printf("SN2 : %d\n", pdcp.SN2);
-    printf("Data : %d\n", pdcp.Data);
-    printf("--------------------------------\n");
-    printf("--------------------------------\n");
-    printf("Received RLC Header\n");
-    printf("DC : %d\n", rlc.DC);
-    printf("P : %d\n", rlc.P);
-    printf("SI : %d\n", rlc.SI);
-    printf("SN : %d\n", rlc.SN);
-    printf("SO : %d\n", rlc.SO);
-    printf("--------------------------------\n");
-    printf("--------------------------------\n");
-    printf("Received MAC Header\n");
-    printf("R : %d\n", mac.R);
-    printf("F : %d\n", mac.F);
-    printf("LCID : %d\n", mac.LCID);
-    printf("L : %d\n", mac.L);
-    printf("--------------------------------\n");
-
-
-    close(client_socket);
-    close(server_socket);
+    
+    
+	printf("--------------------------------\n");
+    	printNAS(&nas);
+    	printRRC(&rrc);
+    	printSDAP(&sdap);
+    	printPDCP(&pdcp);
+    	printRLC(&rlc);
+    	printMAC(&mac);
+    	printUSER(&user);
+   
+    	close(client_socket);
+    	close(server_socket);
 
     return 0;
 }
+
+
+
+void printNAS (struct NAS *nas){
+    	printf("Received NAS Header\n");
+    	printf("nas1 : %d\n", nas->nas1);
+    	printf("nas2 : %d\n", nas->nas2);
+    	printf("--------------------------------\n");
+}
+
+void printRRC (struct RRC *rrc){
+    	printf("Received RRC Header\n");
+    	printf("rrc1 : %d\n", rrc->rrc1);
+    	printf("rrc2 : %d\n", rrc->rrc2);
+    	printf("--------------------------------\n");
+}
+
+void printSDAP (struct SDAP *sdap){
+    	printf("Received SDAP Header\n");
+    	printf("RDI : %d\n", sdap->RDI);
+    	printf("RQI : %d\n", sdap->RQI);
+    	printf("QFI : %d\n", sdap->QFI);
+    	printf("--------------------------------\n");
+}
+
+void printPDCP (struct PDCP *pdcp){
+    	printf("Received PDCP Header\n");
+    	printf("DC : %d\n", pdcp->DC);
+    	printf("R  : %d\n", pdcp->R);
+    	printf("SN : %d\n", pdcp->SN);
+    	printf("--------------------------------\n");
+}
+
+void printRLC (struct RLC *rlc){
+   	printf("Received RLC Header\n");
+    	printf("DC : %d\n", rlc->DC);
+    	printf("P  : %d\n", rlc->P);
+    	printf("SI : %d\n", rlc->SI);
+    	printf("SN : %d\n", rlc->SN);
+    	printf("SO : %d\n", rlc->SO);
+    	printf("--------------------------------\n");
+}
+
+void printMAC (struct MAC *mac){
+    	printf("Received MAC Header\n");
+    	printf("R    : %d\n", mac->R);
+    	printf("F    : %d\n", mac->F);
+    	printf("LCID : %d\n", mac->LCID);
+    	printf("L    : %d\n", mac->L);
+    	printf("--------------------------------\n");
+}
+
+void printUSER(struct USER *user){
+    	printf("Received UserInput\n");
+	printf("user1 : %c\n", user->user1);	
+    	printf("--------------------------------\n");
+}
+

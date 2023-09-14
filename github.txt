@@ -7,3 +7,5 @@ git config -l
 git push https://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@github.com/nithish-gajula/NM-ICPS.git
 
 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
+
+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
